@@ -1,0 +1,365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1554C3CADC6383551FDEE8BE /* ML.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9AEEF703CB1AC014A0881313 /* ML.icns */; };
+		902D94A84FC78739CC3CE485 /* System/Library/Frameworks/Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6C1D3878E34ED4A717D1E4 /* System/Library/Frameworks/Carbon.framework */; };
+		B38A083BF916DB9B6864FC64 /* App.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AD1D3D1544FA4906DC7F1C /* App.m */; };
+		E85703C89289F457419A4958 /* System/Library/Frameworks/Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D8A3046361BBB37B2EB643 /* System/Library/Frameworks/Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		15D8A3046361BBB37B2EB643 /* System/Library/Frameworks/Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		42C59AF8A4BAE559BC5A5D5D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4CC9C73A1F57702DFD1CCC8B /* kernel32.def */ = {isa = PBXFileReference; lastKnownFileType = text; path = kernel32.def; sourceTree = "<group>"; };
+		51AD1D3D1544FA4906DC7F1C /* App.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = App.m; sourceTree = "<group>"; };
+		77BBFB2076B725A586609839 /* test_bindings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = test_bindings.m; sourceTree = "<group>"; };
+		847F4D818CD20B5E8A44F168 /* test_mouse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = test_mouse.c; sourceTree = "<group>"; };
+		8873151C067A966D8A2B0623 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9AEEF703CB1AC014A0881313 /* ML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ML.icns; sourceTree = "<group>"; };
+		A8792157CB4F27FB949C035F /* Mac Mouse Look.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Look.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B73CE6929E3E0ADE0D4AC772 /* user32.def */ = {isa = PBXFileReference; lastKnownFileType = text; path = user32.def; sourceTree = "<group>"; };
+		E6C870B62F840D9034C8F70D /* build-helper.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-helper.sh"; sourceTree = "<group>"; };
+		EC6C1D3878E34ED4A717D1E4 /* System/Library/Frameworks/Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		ED830189CDFD672E83040CB2 /* mouse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mouse.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E2AA269EB967A8853A258BFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E85703C89289F457419A4958 /* System/Library/Frameworks/Cocoa.framework in Frameworks */,
+				902D94A84FC78739CC3CE485 /* System/Library/Frameworks/Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13C4608B5138EBE9B3A45A55 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				51AD1D3D1544FA4906DC7F1C /* App.m */,
+				8873151C067A966D8A2B0623 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1E4DDD4E6CA146BF9C623862 /* WineHelper */ = {
+			isa = PBXGroup;
+			children = (
+				ED830189CDFD672E83040CB2 /* mouse.c */,
+				4CC9C73A1F57702DFD1CCC8B /* kernel32.def */,
+				B73CE6929E3E0ADE0D4AC772 /* user32.def */,
+				E6C870B62F840D9034C8F70D /* build-helper.sh */,
+			);
+			path = WineHelper;
+			sourceTree = "<group>";
+		};
+		3C3E84839B99B59B50C6F000 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15D8A3046361BBB37B2EB643 /* System/Library/Frameworks/Cocoa.framework */,
+				EC6C1D3878E34ED4A717D1E4 /* System/Library/Frameworks/Carbon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63A8B02B52CDAD9CA875D42B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9AEEF703CB1AC014A0881313 /* ML.icns */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		6DC4FAD667A85B8567F612FB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				847F4D818CD20B5E8A44F168 /* test_mouse.c */,
+				77BBFB2076B725A586609839 /* test_bindings.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		9BB774FA257D747BCE9D2083 /* Mac Mouse Look */ = {
+			isa = PBXGroup;
+			children = (
+				13C4608B5138EBE9B3A45A55 /* App */,
+				63A8B02B52CDAD9CA875D42B /* Assets */,
+				1E4DDD4E6CA146BF9C623862 /* WineHelper */,
+				6DC4FAD667A85B8567F612FB /* Tests */,
+				42C59AF8A4BAE559BC5A5D5D /* README.md */,
+				3C3E84839B99B59B50C6F000 /* Frameworks */,
+				AE7805B56D1DCAFAA071416F /* Products */,
+			);
+			name = "Mac Mouse Look";
+			sourceTree = "<group>";
+		};
+		AE7805B56D1DCAFAA071416F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8792157CB4F27FB949C035F /* Mac Mouse Look.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		34A04005BCAF206EEC990BD9 /* Mac Mouse Look */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 78F249D9140B5D7B47DA2B7D /* Build configuration list for PBXNativeTarget "Mac Mouse Look" */;
+			buildPhases = (
+				878A52FC5FF6A57D50B7B870 /* Sources */,
+				E2AA269EB967A8853A258BFA /* Frameworks */,
+				41D311A605520FC7B8B9A980 /* Resources */,
+				32C4FEED996880BC92A062DC /* Build Wine mouse helper */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mac Mouse Look";
+			productName = "Mac Mouse Look";
+			productReference = A8792157CB4F27FB949C035F /* Mac Mouse Look.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		244210E48437B6556980A702 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2710;
+				TargetAttributes = {
+					34A04005BCAF206EEC990BD9 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DF10D92617D0252A0BF9C919 /* Build configuration list for PBXProject "MacMouseLook" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9BB774FA257D747BCE9D2083 /* Mac Mouse Look */;
+			productRefGroup = AE7805B56D1DCAFAA071416F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				34A04005BCAF206EEC990BD9 /* Mac Mouse Look */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		41D311A605520FC7B8B9A980 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1554C3CADC6383551FDEE8BE /* ML.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32C4FEED996880BC92A062DC /* Build Wine mouse helper */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/WineHelper/mouse.c",
+				"$(SRCROOT)/WineHelper/kernel32.def",
+				"$(SRCROOT)/WineHelper/user32.def",
+				"$(SRCROOT)/WineHelper/build-helper.sh",
+			);
+			name = "Build Wine mouse helper";
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/MouseLook.exe",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$SRCROOT/WineHelper/build-helper.sh\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		878A52FC5FF6A57D50B7B870 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B38A083BF916DB9B6864FC64 /* App.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0B0C687DF8B6B8DC790B519C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+			};
+			name = Release;
+		};
+		6C7EFF6369083C8E1F2B1994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2Z4VFQNW75;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXECUTABLE_NAME = MacMouseLook;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mac Mouse Look";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.macmouselook.app;
+				PRODUCT_NAME = "Mac Mouse Look";
+				SKIP_INSTALL = NO;
+			};
+			name = Debug;
+		};
+		73EBF6644258C120893E685D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+			};
+			name = Debug;
+		};
+		DD75E2CB1C510A828AC72D96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2Z4VFQNW75;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXECUTABLE_NAME = MacMouseLook;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mac Mouse Look";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.macmouselook.app;
+				PRODUCT_NAME = "Mac Mouse Look";
+				SKIP_INSTALL = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		78F249D9140B5D7B47DA2B7D /* Build configuration list for PBXNativeTarget "Mac Mouse Look" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C7EFF6369083C8E1F2B1994 /* Debug */,
+				DD75E2CB1C510A828AC72D96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF10D92617D0252A0BF9C919 /* Build configuration list for PBXProject "MacMouseLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73EBF6644258C120893E685D /* Debug */,
+				0B0C687DF8B6B8DC790B519C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 244210E48437B6556980A702 /* Project object */;
+}

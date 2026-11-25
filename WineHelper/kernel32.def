@@ -1,0 +1,19 @@
+LIBRARY kernel32.dll
+EXPORTS
+GetStdHandle
+WriteFile
+ReadFile
+CreateThread
+GetCurrentThreadId
+CreateToolhelp32Snapshot
+Process32FirstW
+Process32NextW
+CloseHandle
+ExitProcess
+GetTickCount
+GetEnvironmentVariableW
+CompareStringOrdinal
+OpenProcess
+QueryFullProcessImageNameW
+CreateFileW
+GetFileInformationByHandle

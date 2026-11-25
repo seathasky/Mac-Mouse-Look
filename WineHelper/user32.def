@@ -1,0 +1,9 @@
+LIBRARY user32.dll
+EXPORTS
+PostThreadMessageW
+PeekMessageW
+MsgWaitForMultipleObjects
+GetForegroundWindow
+GetWindowThreadProcessId
+SendInput
+GetAsyncKeyState
