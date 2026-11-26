@@ -265,6 +265,7 @@ static ReticleTarget reticleTarget(NSArray *windows, pid_t owner, NSRect fallbac
 @interface MouseLook : NSObject <NSApplicationDelegate, NSMenuDelegate>
 @property NSStatusItem *item;
 @property NSMenuItem *status;
+@property NSMenuItem *enabledItem;
 @property NSMenu *bindings;
 @property NSMenuItem *bindingMenu;
 @property NSDictionary *game;
@@ -283,7 +284,9 @@ static ReticleTarget reticleTarget(NSArray *windows, pid_t owner, NSRect fallbac
 @property NSInteger binding;
 @property NSUInteger sessionAttempt;
 @property NSDictionary *probing;
-@property EventHotKeyRef hotKey;
+@property EventHotKeyRef hotKey, enableHotKey;
+@property BOOL disabled, enableShortcutDown;
+- (void)toggleEnabled:(id)sender;
 @property BOOL gameFocused, held, receivedState, shortcutDown;
 @end
 
@@ -351,17 +354,45 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
     GetEventParameter(event,kEventParamDirectObject,typeEventHotKeyID,NULL,sizeof(identifier),NULL,&identifier);
     if (identifier.signature != 'MmLk') return eventNotHandledErr;
     BOOL down = GetEventKind(event) == kEventHotKeyPressed;
-    if (app.gameFocused && down && !app.shortcutDown) [app send:'T'];
-    app.shortcutDown = down;
+    if (!app.gameFocused || app.recording) return eventNotHandledErr;
+    if (identifier.id == 2) {
+        if (down && !app.enableShortcutDown) [app toggleEnabled:nil];
+        app.enableShortcutDown = down;
+    } else if (identifier.id == 1) {
+        if (down && !app.disabled && !app.shortcutDown) [app send:'T'];
+        app.shortcutDown = down;
+    } else {
+        return eventNotHandledErr;
+    }
     return noErr;
 }
+- (void)toggleEnabled:(id)sender {
+    self.disabled = !self.disabled;
+    [NSUserDefaults.standardUserDefaults setBool:self.disabled forKey:@"MouseLookDisabled"];
+    if (self.disabled) {
+        [self send:'U'];
+        self.held = NO;
+    }
+    [self refresh];
+}
 - (void)refresh {
-    if ((!self.gameFocused || self.recording) && self.hotKey) {
+    BOOL inGame = self.gameFocused && !self.recording;
+    if (inGame && !self.enableHotKey) {
+        EventHotKeyRef key = NULL;
+        EventHotKeyID identifier = {'MmLk', 2};
+        if (RegisterEventHotKey(kVK_ANSI_M, shiftKey, identifier, GetApplicationEventTarget(), 0, &key) == noErr)
+            self.enableHotKey = key;
+    } else if (!inGame && self.enableHotKey) {
+        UnregisterEventHotKey(self.enableHotKey);
+        self.enableHotKey = NULL;
+        self.enableShortcutDown = NO;
+    }
+    if ((!inGame || self.disabled) && self.hotKey) {
         UnregisterEventHotKey(self.hotKey);
         self.hotKey = NULL; self.shortcutDown = NO;
     }
     NSString *state = self.stateText;
-    if (self.gameFocused && !self.recording) {
+    if (inGame && !self.disabled) {
         if (!self.hotKey) {
             EventHotKeyRef key = NULL;
             EventHotKeyID hotID = {'MmLk', 1};
@@ -370,7 +401,9 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
         }
         state = self.hotKey ? (self.held ? @"Mouse look on" : [@"Ready in " stringByAppendingString:self.gameName]) : @"Shortcut in use · choose another";
     }
-    self.status.title = state ?: self.waiting;
+    self.enabledItem.state = self.disabled ? NSControlStateValueOff : NSControlStateValueOn;
+    self.enabledItem.title = inGame && !self.enableHotKey ? @"Enabled (⇧M unavailable)" : @"Enabled  ⇧M";
+    self.status.title = self.disabled ? @"Mouse look disabled" : (state ?: self.waiting);
     self.item.button.toolTip = [NSString stringWithFormat:@"Mac Mouse Look · %@ · %@", self.status.title,self.bindingLabel];
     self.item.button.image = [NSImage imageWithSystemSymbolName:self.held ? @"computermouse.fill" : @"computermouse"
                                        accessibilityDescription:@"Mac Mouse Look"];
@@ -460,6 +493,7 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
     NSDictionary *custom = [prefs dictionaryForKey:@"RecordedShortcut"];
     if ([custom[@"code"] isKindOfClass:NSNumber.class] && [custom[@"code"] unsignedIntegerValue] < 128 &&
         [custom[@"modifiers"] isKindOfClass:NSNumber.class] &&
+        !([custom[@"code"] unsignedIntValue] == kVK_ANSI_M && [custom[@"modifiers"] unsignedIntValue] == shiftKey) &&
         !([custom[@"modifiers"] unsignedIntegerValue] & ~(NSUInteger)(cmdKey|shiftKey|optionKey|controlKey)) &&
         [custom[@"label"] isKindOfClass:NSString.class] && [custom[@"label"] length]) {
         self.binding = -1;
@@ -490,6 +524,10 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
         if (event.window != dialog.window) return event;
         if (event.isARepeat) return nil;
         UInt32 mods = shortcutModifiers(event.modifierFlags);
+        if (event.keyCode == kVK_ANSI_M && mods == shiftKey) {
+            dialog.informativeText = @"Shift+M enables or disables Mac Mouse Look. Press another shortcut.";
+            return nil;
+        }
         NSString *label = shortcutLabel(event, mods);
         EventHotKeyRef probe = NULL;
         EventHotKeyID testID = {'MmTs', 1};
@@ -591,6 +629,9 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
     self.item = [NSStatusBar.systemStatusBar statusItemWithLength:NSSquareStatusItemLength];
     NSMenu *menu = [NSMenu new];
     [self loadGames];
+    self.disabled = [NSUserDefaults.standardUserDefaults boolForKey:@"MouseLookDisabled"];
+    self.enabledItem = [menu addItemWithTitle:@"Enabled  ⇧M" action:@selector(toggleEnabled:) keyEquivalent:@""];
+    self.enabledItem.target = self;
     self.status = [menu addItemWithTitle:self.waiting action:nil keyEquivalent:@""];
     [menu addItem:NSMenuItem.separatorItem];
     NSMenuItem *chooseGame = [menu addItemWithTitle:@"Choose Game…" action:@selector(chooseGame:) keyEquivalent:@""];
@@ -632,7 +673,7 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
     if (!self.game) return;
     if (state == '1') state = 'H';
     if (state == '0') state = 'R';
-    if (state == 'H') {
+    if (state == 'H' && !self.disabled) {
         [self showOverlay];
     } else {
         [self hideOverlay];
@@ -654,7 +695,7 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
     }
     self.receivedState = YES;
     self.gameFocused = state == 'H' || state == 'R';
-    self.held = state == 'H';
+    self.held = state == 'H' && !self.disabled;
     self.stateText = state == 'N' ? self.waiting : state == 'E' ? @"Wine could not send mouse input" : [@"Focus " stringByAppendingString:self.gameName];
     [self refresh];
 }
@@ -748,6 +789,7 @@ static OSStatus shortcut(EventHandlerCallRef next, EventRef event, void *context
 - (void)applicationWillTerminate:(NSNotification *)note {
     [self send:'Q']; [self.commands closeFile];
     if (self.hotKey) UnregisterEventHotKey(self.hotKey);
+    if (self.enableHotKey) UnregisterEventHotKey(self.enableHotKey);
 }
 @end
 

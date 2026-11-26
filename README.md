@@ -17,10 +17,13 @@ Tap a key to look around. Tap it again to free your cursor. Mac Mouse Look works
 3. Launch the game as usual. Mac Mouse Look finds its Wine session automatically.
 4. In the game, tap <kbd>E</kbd> to turn mouse look on. Tap <kbd>E</kbd> again to release the cursor.
 
+Press <kbd>Shift</kbd> + <kbd>M</kbd> in the game to disable or re-enable Mac Mouse Look. Disabling it releases the cursor, hides the reticle, and frees your toggle key for the game. Your choice is saved between launches.
+
 ## Menu bar controls
 
 | Control | What it does |
 | --- | --- |
+| **Enabled** | Click to enable or disable Mac Mouse Look. A checkmark means it’s enabled. |
 | **Choose Game…** | Select the `.exe` for the game you want to play. |
 | **Recent Games** | Switch between your last 10 selections. The bottle name appears once the game connects. |
 | **Shortcut → Record Shortcut…** | Change the default <kbd>E</kbd> toggle to your own key or key combination. |

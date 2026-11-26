@@ -86,19 +86,52 @@ static void checkRecentGames(void) {
     assert([recentGames(saved,nil) isEqual:history]);
     puts("Recent game history, bottle identity, reordering, migration and ten-entry limit passed.");
 }
-static void key(RecorderTest *app, UInt32 kind) {
+static void key(MouseLook *app, UInt32 identifierID, UInt32 kind) {
     EventRef event;
     assert(CreateEvent(NULL,kEventClassKeyboard,kind,0,kEventAttributeNone,&event)==noErr);
-    EventHotKeyID identifier={'MmLk',1};
+    EventHotKeyID identifier={'MmLk',identifierID};
     SetEventParameter(event,kEventParamDirectObject,typeEventHotKeyID,sizeof(identifier),&identifier);
     shortcut(NULL,event,(__bridge void *)app);
     ReleaseEvent(event);
+}
+static void checkEnableSwitch(void) {
+    ReticleProbe *app = [ReticleProbe new];
+    app.game = @{@"exe":@"/Games/Game.exe"};
+    NSPipe *pipe = [NSPipe pipe];
+    app.commands = pipe.fileHandleForWriting;
+    [app receive:'H'];
+    key(app,2,kEventHotKeyPressed);
+    key(app,2,kEventHotKeyPressed);
+    assert(app.disabled && !app.held && !app.reticleVisible);
+    assert([NSUserDefaults.standardUserDefaults boolForKey:@"MouseLookDisabled"]);
+    [app receive:'H']; // In-flight response from before disable.
+    assert(!app.held && !app.reticleVisible);
+    key(app,1,kEventHotKeyPressed);
+    key(app,1,kEventHotKeyReleased);
+    key(app,2,kEventHotKeyReleased);
+    key(app,2,kEventHotKeyPressed);
+    key(app,2,kEventHotKeyReleased);
+    assert(!app.disabled && !app.reticleVisible);
+    key(app,1,kEventHotKeyPressed);
+    key(app,1,kEventHotKeyReleased);
+    [app receive:'W'];
+    key(app,2,kEventHotKeyPressed);
+    assert(!app.disabled);
+    [app toggleEnabled:nil]; // Menu is available outside the game.
+    assert(app.disabled);
+    [app toggleEnabled:nil];
+    assert(!app.disabled && ![NSUserDefaults.standardUserDefaults boolForKey:@"MouseLookDisabled"]);
+    [app.commands closeFile];
+    NSData *commands = [pipe.fileHandleForReading readDataToEndOfFile];
+    assert([commands isEqual:[@"UTU" dataUsingEncoding:NSASCIIStringEncoding]]);
+    puts("Enable shortcut, held-key repeat, menu, disabled input, focus and reticle checks passed.");
 }
 int main(void) {
  @autoreleasepool {
     checkLayeredGameWindow();
     checkReticle();
     checkRecentGames();
+    checkEnableSwitch();
     RecorderTest *app = [RecorderTest new];
     NSUserDefaults *defaults=NSUserDefaults.standardUserDefaults;
     [app loadBinding]; assert(app.code==kVK_ANSI_E && app.modifiers==0 && [app.bindingLabel isEqual:@"E"]);
@@ -112,9 +145,9 @@ int main(void) {
     [app loadBinding]; assert(app.code==kVK_ANSI_G && app.modifiers==0);
     assert(shortcutModifiers(NSEventModifierFlagControl | NSEventModifierFlagOption) == (controlKey|optionKey));
     app.gameFocused=YES;
-    key(app,kEventHotKeyPressed); key(app,kEventHotKeyPressed); assert(app.toggleCount==1);
-    key(app,kEventHotKeyReleased); assert(app.toggleCount==1);
-    key(app,kEventHotKeyPressed); key(app,kEventHotKeyReleased); assert(app.toggleCount==2);
+    key(app,1,kEventHotKeyPressed); key(app,1,kEventHotKeyPressed); assert(app.toggleCount==1);
+    key(app,1,kEventHotKeyReleased); assert(app.toggleCount==1);
+    key(app,1,kEventHotKeyPressed); key(app,1,kEventHotKeyReleased); assert(app.toggleCount==2);
     puts("Shortcut loading and press/release checks passed.");
  }
 }
